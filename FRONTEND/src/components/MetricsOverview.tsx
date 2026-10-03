@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  AlertOctagon,
   Clock,
   ThermometerSnowflake,
   ShieldCheck,

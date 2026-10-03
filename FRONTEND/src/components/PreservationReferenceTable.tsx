@@ -3,7 +3,6 @@ import {
   Search,
   Thermometer,
   Clock,
-  ShieldAlert,
   Snowflake,
   Info,
 } from 'lucide-react';
