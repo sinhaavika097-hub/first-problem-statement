@@ -1,0 +1,9 @@
+# Compiled Binaries
+*.exe
+*.o
+*.obj
+
+# Dependencies & Build
+node_modules/
+dist/
+.vite/

@@ -5,6 +5,7 @@ import { MetricsOverview } from './components/MetricsOverview';
 import { SpecimenCard } from './components/SpecimenCard';
 import { PreservationReferenceTable } from './components/PreservationReferenceTable';
 import { AlertDrawer } from './components/AlertDrawer';
+import { BackendBridgeBar } from './components/BackendBridgeBar';
 import { Activity, ShieldAlert, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -19,6 +20,15 @@ export const App: React.FC = () => {
     acknowledgeNotification,
     clearAllNotifications,
     requestNotificationPermission,
+    // Backend properties
+    isBackendConnected,
+    backendTelemetry,
+    backendLatencyMs,
+    isLinkedToBackend,
+    toggleBackendLink,
+    triggerBackendBreakdown,
+    resetBackendCooler,
+    runBackendHealthCheck,
   } = useColdChainMonitor();
 
   const [isAlertDrawerOpen, setIsAlertDrawerOpen] = useState(false);
@@ -39,6 +49,18 @@ export const App: React.FC = () => {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
         {/* KPI Metrics Strip */}
         <MetricsOverview specimens={specimens} evaluations={evaluations} />
+
+        {/* C++ Hardware Backend Telemetry & Control Bridge */}
+        <BackendBridgeBar
+          isConnected={isBackendConnected}
+          telemetry={backendTelemetry}
+          latencyMs={backendLatencyMs}
+          isLinkedToSpecimen={isLinkedToBackend}
+          onToggleLink={toggleBackendLink}
+          onTriggerBreakdown={triggerBackendBreakdown}
+          onResetCooler={resetBackendCooler}
+          onRunTest={runBackendHealthCheck}
+        />
 
         {/* Navigation Tabs (Live Monitoring vs Preservation Standards) */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-6">
@@ -82,6 +104,7 @@ export const App: React.FC = () => {
                   key={specimen.id}
                   specimen={specimen}
                   evaluation={evaluations[specimen.id]}
+                  isBackendLinked={isLinkedToBackend && specimen.id === 'specimen-001'}
                   onAdvanceTime={simulateTimeAdvance}
                   onShiftTemp={simulateTempExcursion}
                 />

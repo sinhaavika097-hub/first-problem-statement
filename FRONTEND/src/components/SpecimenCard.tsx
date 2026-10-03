@@ -12,6 +12,7 @@ import {
   TrendingUp,
   TrendingDown,
   FastForward,
+  Zap,
 } from 'lucide-react';
 import { MonitoredSpecimen, EvaluationResult } from '../types/coldChain';
 import { formatMinutes, getPreservationTimePercent } from '../utils/alertEngine';
@@ -19,6 +20,7 @@ import { formatMinutes, getPreservationTimePercent } from '../utils/alertEngine'
 interface SpecimenCardProps {
   specimen: MonitoredSpecimen;
   evaluation: EvaluationResult;
+  isBackendLinked?: boolean;
   onAdvanceTime: (specimenId: string, minutes: number) => void;
   onShiftTemp: (specimenId: string, deltaCelsius: number) => void;
 }
@@ -26,6 +28,7 @@ interface SpecimenCardProps {
 export const SpecimenCard: React.FC<SpecimenCardProps> = ({
   specimen,
   evaluation,
+  isBackendLinked,
   onAdvanceTime,
   onShiftTemp,
 }) => {
@@ -88,6 +91,12 @@ export const SpecimenCard: React.FC<SpecimenCardProps> = ({
               >
                 {rule.category}
               </span>
+              {isBackendLinked && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">
+                  <Zap className="w-2.5 h-2.5 text-cyan-400" />
+                  C++ Live Node
+                </span>
+              )}
             </div>
             <h3 className="text-base font-bold text-white mt-1">{specimen.specimenName}</h3>
           </div>
